@@ -17,8 +17,13 @@ function detect (win) {
 
       if (window.$nuxt) {
         Vue = window.$nuxt.$root.constructor
+        // -----------------------
         Vue.config.devtools = true
         window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = Vue
+        if (window.$nuxt.$store) {
+          window.__VUE_DEVTOOLS_GLOBAL_HOOK__.emit('vuex:init', window.$nuxt.$store)
+        }
+        // -----------------------
       }
 
       win.postMessage({
@@ -44,8 +49,13 @@ function detect (win) {
       while (Vue.super) {
         Vue = Vue.super
       }
+      // -----------------------
       Vue.config.devtools = true
       window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = Vue
+      if (el.__vue__.$store) {
+        window.__VUE_DEVTOOLS_GLOBAL_HOOK__.emit('vuex:init', el.__vue__.$store)
+      }
+      // -----------------------
       win.postMessage({
         devtoolsEnabled: Vue.config.devtools,
         vueDetected: true
