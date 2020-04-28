@@ -17,6 +17,8 @@ function detect (win) {
 
       if (window.$nuxt) {
         Vue = window.$nuxt.$root.constructor
+        Vue.config.devtools = true
+        window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = Vue
       }
 
       win.postMessage({
@@ -42,6 +44,8 @@ function detect (win) {
       while (Vue.super) {
         Vue = Vue.super
       }
+      Vue.config.devtools = true
+      window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = Vue
       win.postMessage({
         devtoolsEnabled: Vue.config.devtools,
         vueDetected: true
